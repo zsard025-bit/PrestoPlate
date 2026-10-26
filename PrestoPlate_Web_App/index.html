@@ -1,0 +1,262 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PrestoPlate | Cafeteria Pre-Ordering</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#">
+      <span class="brand-mark">P</span>
+      <span>PrestoPlate<small>Cafeteria Pre-Ordering</small></span>
+    </a>
+
+    <div class="top-actions">
+      <span id="session-label">Not signed in</span>
+      <button id="signout-btn" class="button secondary hidden" type="button">
+        Sign out
+      </button>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">ORDER AHEAD. PICK UP WITH EASE.</p>
+        <h1>Your next meal,<br><span>ready when you are.</span></h1>
+        <p class="muted">
+          Order meals ahead, select your pickup time, and track your orders.
+        </p>
+      </div>
+
+      <div class="hero-note">
+        <strong>Simple and convenient</strong>
+        <p class="muted">Your favorite cafeteria meals in a few steps.</p>
+      </div>
+    </section>
+
+    <!-- LOGIN AND REGISTRATION -->
+    <section id="auth-panel" class="panel auth-panel">
+      <div>
+        <p class="eyebrow">YOUR ACCOUNT</p>
+        <h2>Welcome to PrestoPlate</h2>
+        <p class="muted">Sign in or create a customer account.</p>
+      </div>
+
+      <form id="auth-form" class="form">
+        <label>
+          Full name
+          <input
+            id="display-name"
+            type="text"
+            placeholder="Required for registration"
+            autocomplete="name"
+          >
+        </label>
+
+        <label>
+          Email
+          <input
+            id="email"
+            type="email"
+            required
+            autocomplete="email"
+          >
+        </label>
+
+        <label>
+          Password
+          <input
+            id="password"
+            type="password"
+            required
+            minlength="6"
+            autocomplete="current-password"
+          >
+        </label>
+
+        <div class="button-row">
+          <button class="button primary" type="submit">Sign in</button>
+          <button id="signup-btn" class="button secondary" type="button">
+            Create account
+          </button>
+        </div>
+
+        <p id="auth-message" class="message" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <!-- CUSTOMER DASHBOARD -->
+    <div id="customer-panel" class="hidden">
+      <section class="content-grid">
+        <div class="main-column">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">TODAY'S MENU</p>
+              <h2>Choose your meal</h2>
+            </div>
+            <button id="refresh-menu-btn" class="button secondary" type="button">
+              Refresh menu
+            </button>
+          </div>
+
+          <p id="menu-message" class="muted">Loading menu...</p>
+          <div id="menu-grid" class="menu-grid"></div>
+        </div>
+
+        <aside class="panel cart-panel">
+          <div class="section-heading">
+            <h2>Your order</h2>
+            <span id="cart-count" class="count-pill">0</span>
+          </div>
+
+          <div id="cart-items">
+            <p class="muted">Your cart is empty.</p>
+          </div>
+
+          <div class="cart-total">
+            <span>Estimated total</span>
+            <strong id="cart-total">₱0.00</strong>
+          </div>
+
+          <label>
+            Pickup date
+            <input id="pickup-date" type="date" required>
+          </label>
+
+          <label>
+            Pickup time
+            <input id="pickup-time" type="time" required>
+          </label>
+
+          <button id="place-order-btn" class="button primary full-width" type="button">
+            Place order
+          </button>
+
+          <p class="tiny muted">Payment is handled at the cafeteria.</p>
+          <p id="order-message" class="message" aria-live="polite"></p>
+        </aside>
+      </section>
+
+      <section class="panel">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">ORDER TRACKING</p>
+            <h2>My orders</h2>
+          </div>
+          <button id="refresh-orders-btn" class="button secondary" type="button">
+            Refresh orders
+          </button>
+        </div>
+
+        <div id="orders-list">
+          <p class="muted">Your orders will appear here.</p>
+        </div>
+      </section>
+    </div>
+
+    <!-- STAFF DASHBOARD -->
+    <section id="staff-panel" class="panel hidden">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">STAFF WORKSPACE</p>
+          <h2>Cafeteria management</h2>
+          <p class="muted">
+            Manage foods and drinks, monitor orders, and update order statuses.
+          </p>
+        </div>
+        <span class="staff-badge">Staff access</span>
+      </div>
+
+      <!-- ADD AND EDIT MENU ITEMS -->
+      <section class="staff-section">
+        <div class="section-heading">
+          <div>
+            <h3>Manage foods and drinks</h3>
+            <p class="muted">
+              Add items or edit existing names, descriptions, prices, stock, and photos.
+            </p>
+          </div>
+          <button id="refresh-staff-menu-btn" class="button secondary" type="button">
+            Refresh menu
+          </button>
+        </div>
+
+        <form id="add-menu-form" class="form staff-form">
+          <h3>Add a new menu item</h3>
+
+          <label>
+            Food or drink name
+            <input id="new-meal-name" maxlength="120" required>
+          </label>
+
+          <label>
+            Description
+            <input id="new-meal-description" maxlength="500">
+          </label>
+
+          <label>
+            Food or drink photo
+            <input
+              id="new-meal-photo"
+              type="file"
+              accept="image/jpeg,image/png,image/webp,image/gif"
+            >
+          </label>
+
+          <div class="two-fields">
+            <label>
+              Price (₱)
+              <input id="new-meal-price" type="number" min="0" step="0.01" required>
+            </label>
+
+            <label>
+              Initial stock
+              <input id="new-meal-stock" type="number" min="0" step="1" required>
+            </label>
+          </div>
+
+          <button class="button primary" type="submit">Add menu item</button>
+          <p id="staff-menu-message" class="message" aria-live="polite"></p>
+        </form>
+
+        <h3>Existing menu items</h3>
+        <div id="staff-menu-list">
+          <p class="muted">Menu items will appear here.</p>
+        </div>
+      </section>
+
+      <!-- ORDER MONITORING -->
+      <section class="staff-section">
+        <div class="section-heading">
+          <div>
+            <h3>Monitor customer orders</h3>
+            <p class="muted">
+              View incoming orders and update their progress.
+            </p>
+          </div>
+
+          <button id="refresh-staff-orders-btn" class="button secondary" type="button">
+            Refresh orders
+          </button>
+        </div>
+
+        <div id="staff-orders-list">
+          <p class="muted">Customer orders will appear here.</p>
+        </div>
+      </section>
+    </section>
+
+    <footer>
+      <strong>PrestoPlate</strong>
+      <span>Cafeteria Pre-Ordering System</span>
+    </footer>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="app.js"></script>
+</body>
+</html>
